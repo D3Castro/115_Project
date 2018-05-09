@@ -11,7 +11,7 @@ class saveGame
     public:
         saveGame();
         virtual ~saveGame();
-        void saveObjects(int m[][10]);
+        static void saveObjects(int m[][10]);
 
     protected:
 

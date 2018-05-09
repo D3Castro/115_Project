@@ -9,6 +9,7 @@
 #include <iostream>
 #include <Timer.h>
 #include <player.h>
+#include "saveGame.h"
 #include <vector>
 #include <string>
 
@@ -152,7 +153,7 @@ void init()
             matrix[stoi(loc1)][stoi(loc2)] = 4;
 
             M->loadChestImage("images/chest.png");              // load chest image
-            M->placeChest(stoi(loc1),stoi(loc2));                                 // place chest in a grid
+            M->placeChest(stoi(loc1),stoi(loc2));               // place chest in a grid
         }
     }
 }
@@ -209,6 +210,11 @@ void key(unsigned char key, int x, int y)
           if(shoot) {shoot = false;}
           else{shoot = true;}
         break;
+        case 's':
+          saveGame::saveObjects(matrix);
+        break;
+        case 'l':
+            cout << "Load" << endl;
         case 27 :                       // esc key to exit
         case 'q':
             exit(0);
@@ -277,43 +283,47 @@ void Specialkeys(int key, int x, int y)
     switch(key)
     {
     case GLUT_KEY_UP:
-         collide = P->playerCollision(P->getPlayerLoc().x,P->getPlayerLoc().y-1);
-         if(collide){cout << "theres something there bruh"<<endl;}
-         if(!shoot){
-            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-            P->movePlayer(collide,"up");
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] != 0) {collide = true;}
+         if(!shoot && !collide){
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+            P->movePlayer("up");
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else{ P->facePlayer("up"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("up"); P->shootArrow();}
+         collide = false;
     break;
 
     case GLUT_KEY_DOWN:
-         collide = P->playerCollision(P->getPlayerLoc().x,P->getPlayerLoc().y+1);
-         if(collide){cout << "theres something there bruh"<<endl;}
-         if(!shoot){
-            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-            P->movePlayer(collide,"down");
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] != 0){collide = true;}
+         if(!shoot && !collide){
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+            P->movePlayer("down");
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else{ P->facePlayer("down"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("down"); P->shootArrow();}
+         collide = false;
     break;
 
     case GLUT_KEY_LEFT:
-         collide = P->playerCollision(P->getPlayerLoc().x-1,P->getPlayerLoc().y);
-         if(collide){cout << "theres something there bruh"<<endl;}
-         if(!shoot){
-            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-            P->movePlayer(collide,"left");
+         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] != 0){collide = true;}
+         if(!shoot && !collide){
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+            P->movePlayer("left");
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else{ P->facePlayer("left"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("left"); P->shootArrow();}
+         collide = false;
     break;
 
     case GLUT_KEY_RIGHT:
-         collide = P->playerCollision(P->getPlayerLoc().x+1,P->getPlayerLoc().y);
-         if(collide){cout << "theres something there bruh"<<endl;}
-         if(!shoot){
-            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-            P->movePlayer(collide,"right");
+         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] != 0){collide = true;}
+         if(!shoot && !collide){
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+            P->movePlayer("right");
+            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else{ P->facePlayer("right"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("right"); P->shootArrow();}
+         collide = false;
     break;
 
    }

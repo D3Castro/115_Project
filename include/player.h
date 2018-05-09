@@ -29,14 +29,13 @@ class Player
 
         void initPlayer(int,int,char *);   // initialize the player with grid size, image, frames
         void placePlayer(int,int);         // place the player
-        void movePlayer(bool,char *);           // move Player left,right,up,down
+        void movePlayer(char *);           // move Player left,right,up,down
         void facePlayer(char *);           // face Player left,right,up,down
         void loadArrowImage(char *);       // set an image for the Arrow
         loc getLoc();
 
         GridLoc getPlayerLoc();            // player current location
         GridLoc getArrowLoc();             // arrow current location
-        bool playerCollision(int,int);     //check if player collide with anything
 
         int frames;                        // Number of frames for animation
         char *playerDir;                   // direction of player face
@@ -63,7 +62,6 @@ class Player
         loc plyLoc;                        // viewport location of the player
         loc converter(int, int);           // convert Grid location to viewport
         int stepsPerMove;                  // animation steps
-        bool collision;
 
 };
 

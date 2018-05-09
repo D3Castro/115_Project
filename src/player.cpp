@@ -180,21 +180,17 @@ void Player::placePlayer(int x, int y)
     plyLoc.y =  converter(x,y).y;
 }
 
-void Player::movePlayer(bool collide,char* dir)
+void Player::movePlayer(char* dir)
 {
-  collision = collide;
-  if(collision){
-        plyLoc.x =  converter(getPlayerLoc().x,getPlayerLoc().y).x;
-        plyLoc.y =  converter(getPlayerLoc().x,getPlayerLoc().y).y;
-  }
+
   if(strcmp(dir, "left")==0)
-     {    if(strcmp(playerDir, "left")!=0)collision=false;
+     {
           playerDir = "left";
           if(T->GetTicks()>10)
           {
               if(plyLoc.x>-1+unitWidth/2)
                {
-                  plyLoc.x -= t;
+                  plyLoc.x -= t*6;
                }
               if(xmax>=1){
                   xmax =1/(float)frames;
@@ -210,13 +206,13 @@ void Player::movePlayer(bool collide,char* dir)
 
      else if(strcmp(dir, "right")==0)
      {
-         if(strcmp(playerDir, "right")!=0)collision=false;
+
           playerDir = "right";
           if(T->GetTicks()>1)
           {
               if(plyLoc.x<1-unitWidth/2)
              {
-               plyLoc.x += t;
+               plyLoc.x += t*6;
              }
 
               if(xmax>=1){
@@ -233,11 +229,10 @@ void Player::movePlayer(bool collide,char* dir)
 
      else if(strcmp(dir, "up")==0)
      {
-         if(strcmp(playerDir, "up")!=0)collision=false;
           playerDir = "up";
           if(T->GetTicks()>1)
           { if(plyLoc.y< 1-unitWidth/2)
-             plyLoc.y += t;
+             plyLoc.y += t*6;
               if(xmax>=1){
                   xmax =1/(float)frames;
                   xmin =0;
@@ -254,12 +249,11 @@ void Player::movePlayer(bool collide,char* dir)
 
      else if(strcmp(dir, "down")==0)
      {
-          if(strcmp(playerDir, "down")!=0)collision=false;
            playerDir = "down";
           if(T->GetTicks()>1)
           {
               if(plyLoc.y > -1+unitWidth/2)
-                  if(!collision) plyLoc.y -= t;
+                  plyLoc.y -= t*6;
               if(xmax>=1){
                   xmax =1/(float)frames;
                   xmin =0;
@@ -275,7 +269,7 @@ void Player::movePlayer(bool collide,char* dir)
 
 void Player::facePlayer(char* dir)
 {
-         if(strcmp(dir, "left")==0)
+   if(strcmp(dir, "left")==0)
    {     playerDir = "left";
         if(T->GetTicks()>10)
         {
@@ -343,47 +337,6 @@ void Player::facePlayer(char* dir)
             T->Reset();
         }
    }
-}
-
-bool Player::playerCollision(int x, int y)
-{
-    float Xmin = converter(x,y).x-unitWidth/2;
-    float Xmax = converter(x,y).x+unitWidth/2;
-    float Ymin = converter(x,y).y-unitWidth/2;
-    float Ymax = converter(x,y).y+unitWidth/2;
-
-    if( playerDir == "up"){
-       if(plyLoc.y> Ymin-unitWidth/2 && plyLoc.y < Ymax && plyLoc.x> Xmin-unitWidth/4 && plyLoc.x< Xmax+unitWidth/4 )
-       {
-          collision =true;
-          return true;
-       }
-    }
-
-     if(playerDir == "down"){
-        if( plyLoc.y > Ymax && plyLoc.y< Ymax+unitWidth && plyLoc.x> Xmin-unitWidth/4 && plyLoc.x< Xmax+unitWidth/4)
-        {   collision =true;
-            return true;
-        }
-    }
-
-    if(playerDir == "left"){
-        if( plyLoc.x > Xmax && plyLoc.x < Xmax+unitWidth && plyLoc.y> Ymin-unitWidth/4 && plyLoc.y< Ymax+unitWidth/4)
-        {   collision =true;
-            return true;
-        }
-    }
-
-    if(playerDir == "right"){
-        if(plyLoc.x > Xmin-unitWidth/2 && plyLoc.x < Xmax && plyLoc.y> Ymin-unitWidth/4 && plyLoc.y< Ymax+unitWidth/4 )
-       {   collision =true;
-            return true;
-      }
-    }
-
- collision = false;
- return false;
-
 }
 
 GridLoc Player::getPlayerLoc()
