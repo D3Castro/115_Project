@@ -40,6 +40,8 @@ float xPos,yPos;                                // Viewpoar mapping
 const int n = 10;
 int eIndex = 0;
 int matrix[n][n];
+bool shoot = false;
+bool collide = false;
 
 void display(void);                             // Main Display : this runs in a loop
 
@@ -203,7 +205,9 @@ void key(unsigned char key, int x, int y)
     {
         case ' ':
           // if(!M->liveSetOfArrws)      // if setof arrows were picked by player
-             P->shootArrow();
+          //   P->shootArrow();
+          if(shoot) {shoot = false;}
+          else{shoot = true;}
         break;
         case 27 :                       // esc key to exit
         case 'q':
@@ -270,35 +274,52 @@ void mouse(int btn, int state, int x, int y){
 
 void Specialkeys(int key, int x, int y)
 {
-
-    // Your Code here
     switch(key)
     {
     case GLUT_KEY_UP:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("up");
+         collide = P->playerCollision(P->getPlayerLoc().x,P->getPlayerLoc().y-1);
+         if(collide){cout << "theres something there bruh"<<endl;}
+         if(!shoot){
+            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+            P->movePlayer(collide,"up");
+         }
+         else{ P->facePlayer("up"); P->shootArrow();}
     break;
 
     case GLUT_KEY_DOWN:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("down");
+         collide = P->playerCollision(P->getPlayerLoc().x,P->getPlayerLoc().y+1);
+         if(collide){cout << "theres something there bruh"<<endl;}
+         if(!shoot){
+            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+            P->movePlayer(collide,"down");
+         }
+         else{ P->facePlayer("down"); P->shootArrow();}
     break;
 
     case GLUT_KEY_LEFT:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("left");
-
+         collide = P->playerCollision(P->getPlayerLoc().x-1,P->getPlayerLoc().y);
+         if(collide){cout << "theres something there bruh"<<endl;}
+         if(!shoot){
+            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+            P->movePlayer(collide,"left");
+         }
+         else{ P->facePlayer("left"); P->shootArrow();}
     break;
 
     case GLUT_KEY_RIGHT:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("right");
+         collide = P->playerCollision(P->getPlayerLoc().x+1,P->getPlayerLoc().y);
+         if(collide){cout << "theres something there bruh"<<endl;}
+         if(!shoot){
+            cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+            P->movePlayer(collide,"right");
+         }
+         else{ P->facePlayer("right"); P->shootArrow();}
     break;
 
    }
 
    for(int i = 0; i < eIndex; i++){
-        E[i].moveEnemy(P->getLoc());
+       // E[i].moveEnemy(P->getLoc());
    }
 
   glutPostRedisplay();

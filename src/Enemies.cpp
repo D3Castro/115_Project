@@ -80,11 +80,11 @@ void Enemies::placeEnemy(int x, int y)
     enmLoc.y =  -1-unitWidth/2+(unitWidth)*y;
 }
 
-void Enemies::moveEnemy(loc plyLoc)
+/*void Enemies::moveEnemy(loc plyLoc)
 {
 
 }
-
+*/
 void Enemies::animate()
 {
 
