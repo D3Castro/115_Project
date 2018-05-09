@@ -23,6 +23,7 @@
 
 #include <wall.h>
 #include <math.h>
+#include <Graph.h>
 
 /* GLUT callback Handlers */
 
@@ -34,12 +35,14 @@ Player *P = new Player();                       // create player
 wall W[100];                                    // wall with number of bricks
 Enemies E[10];                                  // create number of enemies
 Timer *T0 = new Timer();                        // animation timer
+Timer *moveTimer = new Timer();
 
 float wWidth, wHeight;                          // display window width and Height
 float xPos,yPos;                                // Viewpoar mapping
 const int n = 10;
 int eIndex = 0;
 int matrix[n][n];
+Graph *graph;
 
 void display(void);                             // Main Display : this runs in a loop
 
@@ -69,6 +72,7 @@ void init()
     gluOrtho2D(0, wWidth, 0, wHeight);
 
     T0->Start();                                        // set timer to 0
+    moveTimer->Start();
 
     glEnable(GL_BLEND);                                 //display images with transparent
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -153,6 +157,8 @@ void init()
             M->placeChest(stoi(loc1),stoi(loc2));                                 // place chest in a grid
         }
     }
+
+    graph = new Graph(matrix);
 }
 
 void display(void)
@@ -271,37 +277,40 @@ void mouse(int btn, int state, int x, int y){
 void Specialkeys(int key, int x, int y)
 {
 
-    // Your Code here
-    switch(key)
-    {
-    case GLUT_KEY_UP:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("up");
-    break;
+    if (moveTimer->GetTicks() > 75){
+        switch(key)
+        {
+        case GLUT_KEY_UP:
+             //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+             P->movePlayer("up");
+        break;
 
-    case GLUT_KEY_DOWN:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("down");
-    break;
+        case GLUT_KEY_DOWN:
+             //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+             P->movePlayer("down");
+        break;
 
-    case GLUT_KEY_LEFT:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("left");
+        case GLUT_KEY_LEFT:
+             //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+             P->movePlayer("left");
 
-    break;
+        break;
 
-    case GLUT_KEY_RIGHT:
-         cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
-         P->movePlayer("right");
-    break;
+        case GLUT_KEY_RIGHT:
+             //cout<< P->getPlayerLoc().x<< "    "<<P->getPlayerLoc().y<<endl;
+             P->movePlayer("right");
+        break;
 
-   }
+       }
 
-   for(int i = 0; i < eIndex; i++){
-        E[i].moveEnemy(P->getLoc());
-   }
+       for(int i = 0; i < eIndex; i++){
+           E[i].moveEnemy(P->getPlayerLoc(), graph);
+       }
 
-  glutPostRedisplay();
+      glutPostRedisplay();
+
+      moveTimer->Reset();
+    }
 }
 
 

@@ -132,7 +132,7 @@ void Maze::drawArrows()
     glColor3f(1.0,1.0,1.0);
 
     glTranslatef(setOfArrsLoc.x,setOfArrsLoc.y,1.0);
-    glRotated(-spin,0,0,1);
+    //glRotated(-spin,0,0,1);
 
     glBindTexture(GL_TEXTURE_2D,ArrBnchTex);
     glScaled(1.0/(float)(gridSize),1.0/(float)(gridSize),1.0);
@@ -162,7 +162,7 @@ void Maze::drawChest()
 
     glBindTexture(GL_TEXTURE_2D,chestTex);
     glScaled(1.0/(float)(gridSize+5),1.0/(float)(gridSize+5),1.0);
-    glRotated(spin,0,0,1);
+    //glRotated(spin,0,0,1);
 
     glBegin(GL_QUADS);
         glTexCoord2f(0,1);

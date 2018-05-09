@@ -11,6 +11,7 @@
 #include <thread>
 #include <string>
 #include <math.h>       /* ceil */
+#include <Graph.h>
 
 class Enemies
 {
@@ -21,7 +22,7 @@ class Enemies
 
         void placeEnemy(int,int);           // place enemy
         void drawEnemy();                   // Draw Enemy with Animation
-        void moveEnemy(loc,AdjList);             // move Enemy left,right,up,down
+        void moveEnemy(GridLoc, Graph*);             // move Enemy left,right,up,down
         void animate();                     // Animate sprite
         GridLoc getEnemyLoc();              // Return Enemy current grid location
 
@@ -42,6 +43,7 @@ class Enemies
          bool up,down,left,right;           // move direction
          float moveDis=0;                   // Moving distance for animation
          loc enmLoc;                        // location of the enemy
+         vector<loc> *path = new vector<loc>;
 };
 
 #endif // ENEMIES_H
