@@ -17,3 +17,6 @@ The files are all linked in the main so the game simply runs
 by executing the Maze application file. If this does not work
 then one could use the Maze CBP with codeblocks then build
 and run the file.
+
+GITHUB LINK
+https://github.com/D3Castro/115_Project
