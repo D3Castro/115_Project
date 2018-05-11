@@ -171,6 +171,12 @@ void init()
 
 void display(void)
 {
+    if(P->arrowStatus){
+        if(matrix[P->getArrowLoc().x][P->getArrowLoc().y] == 1){
+            P->arrowStatus = false;
+        }
+    }
+
   glClear (GL_COLOR_BUFFER_BIT);        // clear display screen
 
         glPushMatrix();
@@ -193,7 +199,8 @@ void display(void)
 
         for(int i=0; i<10;i++)
         {
-            E[i].drawEnemy();
+            if(E[i].live)
+                E[i].drawEnemy();
         }
 
         glPushMatrix();
@@ -290,110 +297,87 @@ void mouse(int btn, int state, int x, int y){
 
 void Specialkeys(int key, int x, int y) // Handles player movement and collisions
 {
-    if(eIndex == 0) cout << "Win";//CHARACTER WINS
+    if(eIndex == 0) win = true;//CHARACTER WINS
     //Utilizes matrix for collision detection by looking at the potential move
     if (moveTimer->GetTicks() > 75){
-    switch(key)
-    {
-    case GLUT_KEY_UP:
-        //If our location != 0 (open square) we hit something
-         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] != 0) {collide = true;}
-         //If no collisions then update out matrix location
-         if(!shoot && !collide){
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-            P->movePlayer("up");
-            if(ammo){P->addToQuiver(3); M->collectArrows();}
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-         }
-         else if(shoot){ P->facePlayer("up"); P->shootArrow();}
-         else if(collide){
-            if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 4)
-                cout << "Win";//CHARACTER WINS
-            else if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 1)
-                P->facePlayer("up");
-            else
-                P->movePlayer("up");
-         }
-         collide = false;
-         moveTimer->Reset();
-    break;
+        switch(key)
+        {
+          case GLUT_KEY_UP:
+                  if(P->checkQuiver()){hasArrows = true;}
+                  else{hasArrows = false;}
+                  if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 1){collide = true;}
+                  if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 5){ammo = true;}
+                  if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 4){win = true;}
+                  if(!shoot && !collide){
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                      P->movePlayer("up");
+                      if(ammo){P->addToQuiver(3); M->collectArrows();}
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                  }
+                  else if(shoot){ P->facePlayer("up"); if(hasArrows){P->shootArrow();}}
+                  else if(collide){  P->facePlayer("up");}
+                  collide = false;
+                  ammo = false;
+                  moveTimer->Reset();
+          break;
 
-    case GLUT_KEY_DOWN:
-         if(P->checkQuiver()){hasArrows = true;}
-         else{hasArrows = false;}
-         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 1){collide = true;}
-         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 5){ammo = true;}
-         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 4){win = true;}
-         if(!shoot && !collide){
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-            P->movePlayer("down");
-            if(ammo){P->addToQuiver(3); M->collectArrows();}
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-         }
-         else if(shoot){ P->facePlayer("down"); P->shootArrow();}
-         else if(collide){
-            if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 4)
-                cout << "Win";//CHARACTER WINS
-            else if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 1)
-                P->facePlayer("down");
-            else
-                P->movePlayer("down");
-         }
-         collide = false;
-         moveTimer->Reset();
-    break;
+          case GLUT_KEY_DOWN:
+                  if(P->checkQuiver()){hasArrows = true;}
+                  else{hasArrows = false;}
+                  if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 1){collide = true;}
+                  if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 5){ammo = true;}
+                  if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 4){win = true;}
+                  if(!shoot && !collide){
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                      P->movePlayer("down");
+                      if(ammo){P->addToQuiver(3); M->collectArrows();}
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                  }
+                  else if(shoot){ P->facePlayer("down"); if(hasArrows){P->shootArrow();}}
+                  else if(collide){  P->facePlayer("down");}
+                  collide = false;
+                  ammo = false;
+                  moveTimer->Reset();
+          break;
 
-    case GLUT_KEY_LEFT:
-         if(P->checkQuiver()){hasArrows = true;}
-         else{hasArrows = false;}
-         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 1){collide = true;}
-         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 5){ammo = true;}
-         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 4){win = true;}
-         if(!shoot && !collide){
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-            P->movePlayer("left");
-            if(ammo){P->addToQuiver(3); M->collectArrows();}
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-         }
-         else if(shoot){ P->facePlayer("left"); P->shootArrow();}
-         else if(collide){
-            if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 4)
-                cout << "Win";//CHARACTER WINS
-            else if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 1)
-                P->facePlayer("left");
-            else
-                P->movePlayer("left");
-         }
-         collide = false;
-         moveTimer->Reset();
-    break;
+          case GLUT_KEY_LEFT:
+                  if(P->checkQuiver()){hasArrows = true;}
+                  else{hasArrows = false;}
+                  if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 1){collide = true;}
+                  if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 5){ammo = true;}
+                  if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 4){win = true;}
+                  if(!shoot && !collide){
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                      P->movePlayer("left");
+                      if(ammo){P->addToQuiver(3); M->collectArrows();}
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                  }
+                  else if(shoot){ P->facePlayer("left"); if(hasArrows){P->shootArrow();}}
+                  else if(collide){  P->facePlayer("left");}
+                  collide = false;
+                  ammo = false;
+                  moveTimer->Reset();
+          break;
 
-    case GLUT_KEY_RIGHT:
-         if(P->checkQuiver()){hasArrows = true;}
-         else{hasArrows = false;}
-         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 1){collide = true;}
-         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 5){ammo = true;}
-         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 4){win = true;}
-         if(!shoot && !collide){
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
-            P->movePlayer("right");
-            if(ammo){P->addToQuiver(3); M->collectArrows();}
-            matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
-         }
-         else if(shoot){ P->facePlayer("right"); P->shootArrow();}
-         else if(collide){
-            if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 4)
-                cout << "Win";//CHARACTER WINS
-            else if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 1)
-                P->facePlayer("right");
-            else
-                P->movePlayer("right");
-         }
-         collide = false;
-         moveTimer->Reset();
-    break;
+          case GLUT_KEY_RIGHT:
+                  if(P->checkQuiver()){hasArrows = true;}
+                  else{hasArrows = false;}
+                  if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 1){collide = true;}
+                  if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 5){ammo = true;}
+                  if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 4){win = true;}
+                  if(!shoot && !collide){
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
+                      P->movePlayer("right");
+                      if(ammo){P->addToQuiver(3); M->collectArrows();}
+                      matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
+                  }
+                  else if(shoot){ P->facePlayer("right"); if(hasArrows){P->shootArrow();}}
+                  else if(collide){ P->facePlayer("right"); }
+                  collide = false;
+                  moveTimer->Reset();
+          break;
 
-   }
+        }
     }
 
    for(int i = 0; i < eIndex; i++){
@@ -402,6 +386,17 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
        GridLoc temp = E[i].moveEnemy(P->getPlayerLoc(), graph);
        matrix[fromX][fromY] = 0;
        matrix[temp.x][temp.y] = i;
+
+       if(P->arrowStatus){
+         if(matrix[P->getArrowLoc().x][P->getArrowLoc().y] == 20+i){
+            P->arrowStatus = false;
+            matrix[P->getArrowLoc().x][P->getArrowLoc().y] = 0;
+            E[i].live = false;
+         }
+       }
+
+       if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == matrix[temp.x][temp.y])
+            exit(0);
    }
 
   glutPostRedisplay();
