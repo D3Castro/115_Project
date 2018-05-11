@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
@@ -337,11 +336,11 @@ int main(int argc, char *argv[])
 
    return EXIT_SUCCESS;
 }
-=======
+/**=======
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
- */
+ *//**
 
 #include <string.h>
 #include <CommonThings.h>
@@ -365,7 +364,7 @@ int main(int argc, char *argv[])
 #include <wall.h>
 #include <math.h>
 
-/* GLUT callback Handlers */
+/* GLUT callback Handlers *//**
 
 using namespace std;
 
@@ -676,7 +675,7 @@ void Specialkeys(int key, int x, int y)
 }
 
 
-/* Program entry point */
+/* Program entry point *//**
 
 int main(int argc, char *argv[])
 {
@@ -698,4 +697,4 @@ int main(int argc, char *argv[])
 
    return EXIT_SUCCESS;
 }
->>>>>>> origin/PlayerMove
+>>>>>>> origin/PlayerMove**/

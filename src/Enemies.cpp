@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
@@ -198,11 +197,11 @@ GridLoc Enemies::getEnemyLoc()
     return val;
 }
 
-=======
+/**=======
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
- */
+ *//**
 
 #include <Enemies.h>
 #include <iostream>
@@ -285,7 +284,7 @@ void Enemies::placeEnemy(int x, int y)
 {
 
 }
-*/
+*//**
 void Enemies::animate()
 {
 
@@ -381,4 +380,4 @@ GridLoc Enemies::getEnemyLoc()
     return val;
 }
 
->>>>>>> origin/PlayerMove
+>>>>>>> origin/PlayerMove**/

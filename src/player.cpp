@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
@@ -287,13 +286,13 @@ loc Player::getLoc()
 {
     return plyLoc;
 }
-=======
+/**=======
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
  */
 
-#include <Player.h>
+/**#include <Player.h>
 
 Timer *T = new Timer();                             // Set Timer for animation
 
@@ -655,4 +654,4 @@ loc Player::getLoc()
 {
     return plyLoc;
 }
->>>>>>> origin/PlayerMove
+>>>>>>> origin/PlayerMove**/

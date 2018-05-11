@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
@@ -66,11 +65,11 @@ class Player
 };
 
 #endif // PLAYER_H
-=======
+/**=======
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
- */
+ *
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -81,7 +80,7 @@ class Player
 #include<SOIL.h>
 #include<iostream>
 #include <Timer.h>
-#include <math.h>       /* ceil */
+#include <math.h>       /* ceil *
 
 
 using namespace std;
@@ -135,4 +134,4 @@ class Player
 };
 
 #endif // PLAYER_H
->>>>>>> origin/PlayerMove
+>>>>>>> origin/PlayerMove**/

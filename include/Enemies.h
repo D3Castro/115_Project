@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
@@ -48,11 +47,11 @@ class Enemies
 };
 
 #endif // ENEMIES_H
-=======
+/**=======
 /*
  * MAZE Game Framework
  * Written by Dr. Dhanyu Amarasinghe Spring 2018
- */
+ *//**
 #ifndef ENEMIES_H
 #define ENEMIES_H
 
@@ -61,7 +60,7 @@ class Enemies
 #include <time.h>
 #include <thread>
 #include <string>
-#include <math.h>       /* ceil */
+#include <math.h>       /* ceil *//**
 
 class Enemies
 {
@@ -96,4 +95,4 @@ class Enemies
 };
 
 #endif // ENEMIES_H
->>>>>>> origin/PlayerMove
+>>>>>>> origin/PlayerMove**/
