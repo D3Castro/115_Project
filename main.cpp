@@ -306,7 +306,13 @@ void mouse(int btn, int state, int x, int y){
 
 void Specialkeys(int key, int x, int y) // Handles player movement and collisions
 {
-    if(eIndex == 0) win = true;//CHARACTER WINS
+    bool alldead = true;
+    for(int i = 0;i < eIndex;i++){
+        if(E[i].live)
+            alldead = false;
+    }
+    if(alldead)
+        win = true;//CHARACTER WINS
     //Utilizes matrix for collision detection by looking at the potential move
     if (moveTimer->GetTicks() > 75){
         switch(key)
@@ -397,8 +403,11 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
            matrix[fromX][fromY] = 0;
            matrix[temp.x][temp.y] = 20+i;
 
-           if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == matrix[temp.x][temp.y])
+
+           if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == matrix[temp.x][temp.y]){
+                cout<< "YOU LOSE!";
                 exit(0);
+           }
        }
    }
 
