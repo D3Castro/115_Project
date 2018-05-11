@@ -381,22 +381,24 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
     }
 
    for(int i = 0; i < eIndex; i++){
-       int fromX = E[i].getEnemyLoc().x;
-       int fromY = E[i].getEnemyLoc().y;
-       GridLoc temp = E[i].moveEnemy(P->getPlayerLoc(), graph);
-       matrix[fromX][fromY] = 0;
-       matrix[temp.x][temp.y] = i;
+       if(E[i].live){
+           int fromX = E[i].getEnemyLoc().x;
+           int fromY = E[i].getEnemyLoc().y;
+           GridLoc temp = E[i].moveEnemy(P->getPlayerLoc(), graph);
+           matrix[fromX][fromY] = 0;
+           matrix[temp.x][temp.y] = 20+i;
 
-       if(P->arrowStatus){
-         if(matrix[P->getArrowLoc().x][P->getArrowLoc().y] == 20+i){
-            P->arrowStatus = false;
-            matrix[P->getArrowLoc().x][P->getArrowLoc().y] = 0;
-            E[i].live = false;
-         }
+           if(P->arrowStatus){
+             if(matrix[P->getArrowLoc().x][P->getArrowLoc().y] == matrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y]){
+                P->arrowStatus = false;
+                matrix[temp.x][temp.y] = 0;
+                E[i].live = false;
+             }
+           }
+
+           if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == matrix[temp.x][temp.y])
+                exit(0);
        }
-
-       if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == matrix[temp.x][temp.y])
-            exit(0);
    }
 
   glutPostRedisplay();
