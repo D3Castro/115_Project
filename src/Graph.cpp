@@ -44,7 +44,6 @@ void Graph::BFS(GridLoc src, GridLoc dest, vector<loc> *path)
     qNode s = {src, shortPath};
     q.push(s);
 
-    cout<< "Dest: " << dest.x << "    " << dest.y << endl;
     while(!q.empty()){
         qNode curr = q.front(); GridLoc currLoc = curr.pt;
 
@@ -53,9 +52,6 @@ void Graph::BFS(GridLoc src, GridLoc dest, vector<loc> *path)
 
         if(currLoc.x == dest.x && currLoc.y == dest.y){
             if(curr.sPath.size() > 1){
-                for (auto i = curr.sPath.begin(); i != curr.sPath.end(); ++i)
-                    cout << i->x << ' ' << i->y << '\n';
-
                 path->assign(curr.sPath.begin(),curr.sPath.end());
             }
             return;

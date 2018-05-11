@@ -24,6 +24,7 @@
 
 #include <wall.h>
 #include <math.h>
+#include <Graph.h>
 
 /* GLUT callback Handlers */
 
@@ -41,6 +42,7 @@ float xPos,yPos;                                // Viewpoar mapping
 const int n = 10;
 int eIndex = 0;
 int matrix[n][n];
+Graph* graph;
 bool shoot = false;
 bool collide = false;
 
@@ -156,6 +158,8 @@ void init()
             M->placeChest(stoi(loc1),stoi(loc2));               // place chest in a grid
         }
     }
+
+    graph = new Graph(matrix);
 }
 
 void display(void)
@@ -333,7 +337,7 @@ void Specialkeys(int key, int x, int y)
    }
 
    for(int i = 0; i < eIndex; i++){
-       // E[i].moveEnemy(P->getLoc());
+       E[i].moveEnemy(P->getPlayerLoc(), graph);
    }
 
   glutPostRedisplay();

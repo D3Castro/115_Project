@@ -187,7 +187,7 @@ void Player::movePlayer(char* dir)
   if(strcmp(dir, "left")==0)
      {
           playerDir = "left";
-          if(T->GetTicks()>10)
+          if(T->GetTicks()>50)
           {
               if(plyLoc.x>-1+unitWidth/2)
                {
@@ -209,7 +209,7 @@ void Player::movePlayer(char* dir)
      {
 
           playerDir = "right";
-          if(T->GetTicks()>1)
+          if(T->GetTicks()>50)
           {
               if(plyLoc.x<1-unitWidth/2)
              {
@@ -231,7 +231,7 @@ void Player::movePlayer(char* dir)
      else if(strcmp(dir, "up")==0)
      {
           playerDir = "up";
-          if(T->GetTicks()>1)
+          if(T->GetTicks()>50)
           { if(plyLoc.y< 1-unitWidth/2)
              plyLoc.y += t*6;
               if(xmax>=1){
@@ -251,7 +251,7 @@ void Player::movePlayer(char* dir)
      else if(strcmp(dir, "down")==0)
      {
            playerDir = "down";
-          if(T->GetTicks()>1)
+          if(T->GetTicks()>50)
           {
               if(plyLoc.y > -1+unitWidth/2)
                   plyLoc.y -= t*6;
