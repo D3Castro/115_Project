@@ -28,6 +28,8 @@ class Player
         void drawplayer();                 // Draw Player image
         void drawArrow();                  // Draw Arrow
         void shootArrow();                 // Shoot arrow movement
+        void addToQuiver(int);             // Player gains Arrow
+        bool checkQuiver();                // Check before shooting
 
         void initPlayer(int,int,char *);   // initialize the player with grid size, image, frames
         void placePlayer(int,int);         // place the player
@@ -42,6 +44,7 @@ class Player
         int frames;                        // Number of frames for animation
         char *playerDir;                   // direction of player face
 
+        int quiver = 2;
         bool arrowStatus;                  // arrow is active or not
         bool livePlayer;                   // Player live or dead
     protected:

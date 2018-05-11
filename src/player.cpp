@@ -74,6 +74,7 @@ void Player::shootArrow()
         arrYdir=0;
         arrowLoc.x = plyLoc.x-unitWidth/2;
         arrowLoc.y = plyLoc.y;
+        quiver--;
       }
       if(strcmp(playerDir, "right")==0)
       {
@@ -82,6 +83,7 @@ void Player::shootArrow()
         arrYdir=0;
         arrowLoc.x = plyLoc.x+unitWidth/2;
         arrowLoc.y = plyLoc.y;
+        quiver--;
       }
       if(strcmp(playerDir, "up")==0)
       {
@@ -91,6 +93,7 @@ void Player::shootArrow()
 
         arrowLoc.y = plyLoc.y+unitWidth/2;
         arrowLoc.x = plyLoc.x;
+        quiver--;
       }
       if(strcmp(playerDir, "down")==0)
       {
@@ -100,11 +103,22 @@ void Player::shootArrow()
 
         arrowLoc.y = plyLoc.y-unitWidth/2;
         arrowLoc.x = plyLoc.x;
+        quiver--;
       }
      }
     }
 }
 
+void Player::addToQuiver(int arrow)
+{
+    quiver+= arrow;
+}
+
+bool Player::checkQuiver()
+{
+    if(quiver>= 1){return true;}
+    else{ return false;}
+}
 
 void Player::loadArrowImage(char* fileName)
 {

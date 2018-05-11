@@ -44,7 +44,11 @@ int eIndex = 0;
 int matrix[n][n];
 Graph* graph;
 bool shoot = false;
+bool hasArrows = true;
 bool collide = false;
+bool ammo = false;
+bool win = false;
+bool lose = false;
 
 void display(void);                             // Main Display : this runs in a loop
 
@@ -287,49 +291,72 @@ void Specialkeys(int key, int x, int y)
     switch(key)
     {
     case GLUT_KEY_UP:
-         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] != 0) {collide = true;}
+         if(P->checkQuiver()){hasArrows = true;}
+         else{hasArrows = false;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 1) {collide = true;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 5) {ammo = true;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 4) {win = true;}
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("up");
+            if(ammo){P->addToQuiver(1);}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else if(shoot){ P->facePlayer("up"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("up");if(hasArrows){P->shootArrow();}}
          else if(collide){  P->facePlayer("up");}
          collide = false;
+         ammo = false;
     break;
 
     case GLUT_KEY_DOWN:
-         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] != 0){collide = true;}
+         if(P->checkQuiver()){hasArrows = true;}
+         else{hasArrows = false;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 1){collide = true;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 5){ammo = true;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 4){win = true;}
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("down");
+            if(ammo){P->addToQuiver(1);}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else if(shoot){ P->facePlayer("down"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("down"); if(hasArrows){P->shootArrow();}}
          else if(collide){  P->facePlayer("down");}
          collide = false;
+         ammo = false;
     break;
 
     case GLUT_KEY_LEFT:
-         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] != 0){collide = true;}
+         if(P->checkQuiver()){hasArrows = true;}
+         else{hasArrows = false;}
+         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 1){collide = true;}
+         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 5){ammo = true;}
+         if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 4){win = true;}
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("left");
+            if(ammo){P->addToQuiver(1);}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else if(shoot){ P->facePlayer("left"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("left"); if(hasArrows){P->shootArrow();}}
          else if(collide){  P->facePlayer("left");}
          collide = false;
+         ammo = false;
     break;
 
     case GLUT_KEY_RIGHT:
-         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] != 0){collide = true;}
+         if(P->checkQuiver()){hasArrows = true;}
+         else{hasArrows = false;}
+         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 1){collide = true;}
+         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 5){ammo = true;}
+         if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 4){win = true;}
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("right");
+            if(ammo){P->addToQuiver(1);}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
-         else if(shoot){ P->facePlayer("right"); P->shootArrow();}
+         else if(shoot){ P->facePlayer("right"); if(hasArrows){P->shootArrow();}}
          else if(collide){  P->facePlayer("right");}
          collide = false;
     break;
