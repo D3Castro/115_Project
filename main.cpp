@@ -197,10 +197,19 @@ void display(void)
             P->drawplayer();
         glPopMatrix();
 
-        for(int i=0; i<10;i++)
+        for(int i=0; i<eIndex;i++)
         {
-            if(E[i].live)
+            if(E[i].live){
                 E[i].drawEnemy();
+
+               if(P->arrowStatus){
+                 if((P->getArrowLoc().x == E[i].getEnemyLoc().x) && (P->getArrowLoc().y == E[i].getEnemyLoc().y)){
+                    P->arrowStatus = false;
+                    matrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().x] = 0;
+                    E[i].live = false;
+                 }
+               }
+            }
         }
 
         glPushMatrix();
@@ -387,14 +396,6 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
            GridLoc temp = E[i].moveEnemy(P->getPlayerLoc(), graph);
            matrix[fromX][fromY] = 0;
            matrix[temp.x][temp.y] = 20+i;
-
-           if(P->arrowStatus){
-             if(matrix[P->getArrowLoc().x][P->getArrowLoc().y] == matrix[E[i].getEnemyLoc().x][E[i].getEnemyLoc().y]){
-                P->arrowStatus = false;
-                matrix[temp.x][temp.y] = 0;
-                E[i].live = false;
-             }
-           }
 
            if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] == matrix[temp.x][temp.y])
                 exit(0);
