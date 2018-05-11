@@ -40,9 +40,9 @@ Timer *moveTimer = new Timer();
 
 float wWidth, wHeight;                          // display window width and Height
 float xPos,yPos;                                // Viewpoar mapping
-const int n = 10;
-int eIndex = 0;
-int matrix[n][n];
+const int n = 10;                               //Set grid size N
+int eIndex = 0;                                 //Number of enemies
+int matrix[n][n];                               //Matrix of object locations
 Graph* graph;
 bool shoot = false;
 bool hasArrows = true;
@@ -91,6 +91,7 @@ void init()
     string loc1, loc2;
     int enemies = 20;
     int wIndex = 0;
+
     vector<string> tokens = readObjects("mazedoc.txt");
     //Initialize as empty maze
     for (int i = 0; i < n; i++){
@@ -99,6 +100,7 @@ void init()
         }
     }
 
+    //Read through the text file for object locations
     while(!tokens.empty()){
         if(tokens.front() == "WALL"){
             tokens.erase(tokens.begin());
@@ -166,6 +168,7 @@ void init()
         }
     }
 
+    //Graph utilized for enemy search
     graph = new Graph(matrix);
 }
 
@@ -296,15 +299,24 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
     switch(key)
     {
     case GLUT_KEY_UP:
+<<<<<<< HEAD
         //If our location != 0 (open square) we hit something
          if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] != 0) {collide = true;}
          //If no collisions then update out matrix location
+=======
+         if(P->checkQuiver()){hasArrows = true;}
+         else{hasArrows = false;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 1) {collide = true;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 5) {ammo = true;}
+         if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 4) {win = true;}
+>>>>>>> 13b20245d84038061363260802e065f7f83d9d2a
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("up");
             if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
+<<<<<<< HEAD
          else if(shoot){ P->facePlayer("up"); P->shootArrow();}
          else if(collide){
             if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y+1] == 4)
@@ -316,6 +328,12 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
          }
          collide = false;
          moveTimer->Reset();
+=======
+         else if(shoot){ P->facePlayer("up");if(hasArrows){P->shootArrow();}}
+         else if(collide){  P->facePlayer("up");}
+         collide = false;
+         ammo = false;
+>>>>>>> 13b20245d84038061363260802e065f7f83d9d2a
     break;
 
     case GLUT_KEY_DOWN:
@@ -330,6 +348,7 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
             if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
+<<<<<<< HEAD
          else if(shoot){ P->facePlayer("down"); P->shootArrow();}
          else if(collide){
             if(matrix[P->getPlayerLoc().x][P->getPlayerLoc().y-1] == 4)
@@ -341,6 +360,12 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
          }
          collide = false;
          moveTimer->Reset();
+=======
+         else if(shoot){ P->facePlayer("down"); if(hasArrows){P->shootArrow();}}
+         else if(collide){  P->facePlayer("down");}
+         collide = false;
+         ammo = false;
+>>>>>>> 13b20245d84038061363260802e065f7f83d9d2a
     break;
 
     case GLUT_KEY_LEFT:
@@ -355,6 +380,7 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
             if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
+<<<<<<< HEAD
          else if(shoot){ P->facePlayer("left"); P->shootArrow();}
          else if(collide){
             if(matrix[P->getPlayerLoc().x-1][P->getPlayerLoc().y] == 4)
@@ -366,6 +392,12 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
          }
          collide = false;
          moveTimer->Reset();
+=======
+         else if(shoot){ P->facePlayer("left"); if(hasArrows){P->shootArrow();}}
+         else if(collide){  P->facePlayer("left");}
+         collide = false;
+         ammo = false;
+>>>>>>> 13b20245d84038061363260802e065f7f83d9d2a
     break;
 
     case GLUT_KEY_RIGHT:
@@ -380,6 +412,7 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
             if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
+<<<<<<< HEAD
          else if(shoot){ P->facePlayer("right"); P->shootArrow();}
          else if(collide){
             if(matrix[P->getPlayerLoc().x+1][P->getPlayerLoc().y] == 4)
@@ -389,6 +422,10 @@ void Specialkeys(int key, int x, int y) // Handles player movement and collision
             else
                 P->movePlayer("right");
          }
+=======
+         else if(shoot){ P->facePlayer("right"); if(hasArrows){P->shootArrow();}}
+         else if(collide){  P->facePlayer("right");}
+>>>>>>> 13b20245d84038061363260802e065f7f83d9d2a
          collide = false;
          moveTimer->Reset();
     break;

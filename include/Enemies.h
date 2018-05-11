@@ -22,7 +22,7 @@ class Enemies
 
         void placeEnemy(int,int);           // place enemy
         void drawEnemy();                   // Draw Enemy with Animation
-        void moveEnemy(GridLoc, Graph*);             // move Enemy left,right,up,down
+        GridLoc moveEnemy(GridLoc, Graph*);             // move Enemy left,right,up,down
         void animate();                     // Animate sprite
         GridLoc getEnemyLoc();              // Return Enemy current grid location
 

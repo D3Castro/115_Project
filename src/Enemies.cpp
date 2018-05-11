@@ -80,11 +80,12 @@ void Enemies::placeEnemy(int x, int y)
     enmLoc.y =  -1-unitWidth/2+(unitWidth)*y;
 }
 
-void Enemies::moveEnemy(GridLoc plyLoc, Graph *graph)
+GridLoc Enemies::moveEnemy(GridLoc plyLoc, Graph *graph)
 {
     graph->BFS(this->getEnemyLoc(), plyLoc, path);
     if(path->size() > 1){
         loc next = path->at(1);
+        GridLoc r; r.x = next.x; r.y = next.y;
 
         //Left
         if(next.x < this->getEnemyLoc().x){
@@ -99,6 +100,7 @@ void Enemies::moveEnemy(GridLoc plyLoc, Graph *graph)
         } else if(next.y > this->getEnemyLoc().y) {
             up=true; down=left=right=false;
         }
+        return r;
     }
 }
 
