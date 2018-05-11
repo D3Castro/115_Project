@@ -45,6 +45,7 @@ int matrix[n][n];
 Graph* graph;
 bool shoot = false;
 bool hasArrows = true;
+bool aQuiver = true;
 bool collide = false;
 bool ammo = false;
 bool win = false;
@@ -206,22 +207,21 @@ void display(void)
         glPopMatrix();
 
     glutSwapBuffers();
+    if(win){ cout<< "YOU WIN!" << endl; exit(0);}
 }
 
 void key(unsigned char key, int x, int y)
 {
     switch (key)
     {
-        case ' ':
-          // if(!M->liveSetOfArrws)      // if setof arrows were picked by player
-          //   P->shootArrow();
+        case ' ':                      // enter/exit shooting stance
           if(shoot) {shoot = false;}
           else{shoot = true;}
         break;
-        case 's':
+        case 's':                     // saves the current matrix into a file
           saveGame::saveObjects(matrix);
         break;
-        case 'l':
+        case 'l':                     // could load matrix into the game
             cout << "Load" << endl;
         case 27 :                       // esc key to exit
         case 'q':
@@ -286,7 +286,7 @@ void mouse(int btn, int state, int x, int y){
      glutPostRedisplay();
 };
 
-void Specialkeys(int key, int x, int y)
+void Specialkeys(int key, int x, int y) // Handles player movement and collisions
 {
     switch(key)
     {
@@ -299,7 +299,7 @@ void Specialkeys(int key, int x, int y)
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("up");
-            if(ammo){P->addToQuiver(1);}
+            if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
          else if(shoot){ P->facePlayer("up");if(hasArrows){P->shootArrow();}}
@@ -317,7 +317,7 @@ void Specialkeys(int key, int x, int y)
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("down");
-            if(ammo){P->addToQuiver(1);}
+            if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
          else if(shoot){ P->facePlayer("down"); if(hasArrows){P->shootArrow();}}
@@ -335,7 +335,7 @@ void Specialkeys(int key, int x, int y)
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("left");
-            if(ammo){P->addToQuiver(1);}
+            if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
          else if(shoot){ P->facePlayer("left"); if(hasArrows){P->shootArrow();}}
@@ -353,7 +353,7 @@ void Specialkeys(int key, int x, int y)
          if(!shoot && !collide){
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 0;
             P->movePlayer("right");
-            if(ammo){P->addToQuiver(1);}
+            if(ammo){P->addToQuiver(3); M->collectArrows();}
             matrix[P->getPlayerLoc().x][P->getPlayerLoc().y] = 3;
          }
          else if(shoot){ P->facePlayer("right"); if(hasArrows){P->shootArrow();}}

@@ -32,6 +32,7 @@ class Maze
       void drawBackground();              // Draw background image
       void drawGrid();                    // Draw Grid
       void drawArrows();                  // Draw set of Arrows
+      void collectArrows();               // Player grabs Arrows
       void drawChest();                   // Draw Chest
 
       int getGridSize();                  // return grid size

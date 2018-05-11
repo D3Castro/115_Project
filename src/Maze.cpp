@@ -152,6 +152,10 @@ void Maze::drawArrows()
      glEnd();
     }
 }
+void Maze::collectArrows()
+{
+    liveSetOfArrws = false;
+}
 
 void Maze::drawChest()
 {
@@ -192,5 +196,3 @@ loc Maze::converter(int x, int y)
        val.y = -1-unitWidth/2+(unitWidth)*y;
        return val;
 }
-
-
